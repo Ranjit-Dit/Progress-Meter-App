@@ -1,6 +1,65 @@
-# Progress Meter
+<p align="center">
+  <img src="apps/progress_meter/assets/branding/progress-meter.png" width="96" alt="Progress Meter logo" />
+</p>
+
+<h1 align="center">Progress Meter</h1>
+
+<p align="center">
+  Evidence-first academic and career growth tracking for students.<br />
+  Test what you know, set ambitious targets, and let AI judge progress from evidence.
+</p>
+
+<p align="center">
+  <a href="https://progress-meter-kappa.vercel.app/">Open the web app</a>
+  ·
+  <a href="apps/progress_meter/README.md">Read the app guide</a>
+  ·
+  <a href="apps/progress_meter/docs/ARCHITECTURE.md">Explore the architecture</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-3.47-02569B?logo=flutter&logoColor=white" alt="Flutter 3.47" />
+  <img src="https://img.shields.io/badge/AI--judged-evidence--first-2D5B4A" alt="AI judged evidence first" />
+  <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20Web-4F7F6B" alt="iOS macOS Web" />
+</p>
 
 The student Progress Meter Flutter application is in **[`apps/progress_meter/`](apps/progress_meter/)**. Version 1.8.0 includes academic and career progress, AI-only assessments, Testing Lab, goals, researched benchmark paths, routines, daily tasks, document imports, and personal AI provider connections.
+
+## Mobile app preview
+
+The gallery below shows the responsive app layout at a mobile-sized viewport—the same navigation and cards used on iPhone. Select any image to open the full-resolution preview.
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <a href="docs/screenshots/overview-mobile.jpg">
+        <img src="docs/screenshots/overview-mobile.jpg" alt="Progress Meter Overview on a mobile screen" width="240" />
+      </a><br />
+      <sub><b>Overview</b><br />AI assessment snapshot</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="docs/screenshots/goals-mobile.jpg">
+        <img src="docs/screenshots/goals-mobile.jpg" alt="Progress Meter Goals on a mobile screen" width="240" />
+      </a><br />
+      <sub><b>Goals</b><br />AI-verified direction</sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="docs/screenshots/testing-lab-mobile.jpg">
+        <img src="docs/screenshots/testing-lab-mobile.jpg" alt="Progress Meter Testing Lab on a mobile screen" width="240" />
+      </a><br />
+      <sub><b>Testing Lab</b><br />Hard questions and feedback</sub>
+    </td>
+  </tr>
+</table>
+
+## What it helps you do
+
+| Focus | Built for |
+| --- | --- |
+| **Measure** | AI-only judgments for understanding, practice, consistency, and outcomes |
+| **Improve** | Strict Testing Lab exams with custom question counts and actionable feedback |
+| **Aim higher** | Research benchmark paths, set targets, and track readiness against evidence |
+| **Stay consistent** | Routines, daily tasks, classes, food plans, reminders, and history |
 
 This repository contains the Flutter app and its optional AI gateway. The older NestJS service that previously lived at the repository root has been removed from the current tree; its earlier commits remain in Git history if it ever needs to be recovered. The Flutter app uses local device storage, direct personal AI connections, or the gateway in `apps/progress_meter/backend/`.
 
