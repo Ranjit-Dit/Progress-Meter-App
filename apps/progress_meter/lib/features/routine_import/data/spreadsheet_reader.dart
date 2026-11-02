@@ -1,4 +1,3 @@
-import 'dart:isolate';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -12,7 +11,7 @@ abstract final class SpreadsheetReader {
   static Future<ImportDocument> read(
     Uint8List bytes, {
     required String filename,
-  }) => Isolate.run(() => decode(bytes, filename: filename));
+  }) async => decode(bytes, filename: filename);
 
   static ImportDocument decode(Uint8List bytes, {required String filename}) {
     if (bytes.isEmpty || bytes.length > 10 * 1024 * 1024) {

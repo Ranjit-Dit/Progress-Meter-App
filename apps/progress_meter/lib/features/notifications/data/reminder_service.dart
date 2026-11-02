@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../domain/reminder_plan.dart';
@@ -23,7 +22,7 @@ abstract interface class ReminderService {
 class NativeReminderService implements ReminderService {
   NativeReminderService({MethodChannel? channel, bool? supported})
     : _channel = channel ?? const MethodChannel('progress_meter/reminders'),
-      _supported = supported ?? Platform.isMacOS;
+      _supported = supported ?? defaultTargetPlatform == TargetPlatform.macOS;
   final MethodChannel _channel;
   final bool _supported;
 

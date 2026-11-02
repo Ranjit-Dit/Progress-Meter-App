@@ -46,7 +46,11 @@ The fallback defaults to Release; use `bash tool/build_macos.sh Debug` for a deb
 
 The release app is generated under `build/macos/Build/Products/Release/Progress Meter.app`. A release build does not provide distribution signing or notarization.
 
-Development and verification used Flutter 3.47 with Dart 3.13. The project requires Dart 3.13 or newer within Dart 3.x. An Android runner is included, but Android builds and device behavior remain unverified. This implementation uses `dart:io` persistence and does not currently target the web.
+Development and verification used Flutter 3.47 with Dart 3.13. The project requires Dart 3.13 or newer within Dart 3.x. An Android runner is included, but Android builds and device behavior remain unverified. Flutter web is also supported through the browser-safe storage and backend adapters described below.
+
+### Web deployment
+
+The release web bundle is published at [progress-meter-kappa.vercel.app](https://progress-meter-kappa.vercel.app/). Browser workspaces are saved in `localStorage` for the current browser profile, so use the native app when you need device-level backups or cross-device sharing. The static web build supports the local dashboard, goals, routines, tasks, benchmarks, and saved evidence; macOS notifications and native document/file integrations remain native-app features. AI actions in a browser need a reachable HTTPS gateway configured in **Connection settings** (the local Node backend is not exposed by the static site).
 
 ## Run on iPhone
 

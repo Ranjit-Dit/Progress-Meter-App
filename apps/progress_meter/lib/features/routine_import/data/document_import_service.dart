@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:isolate';
 
 import 'package:file_selector/file_selector.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../../routines/domain/routine_models.dart';
@@ -56,7 +55,8 @@ class LocalRoutineImportService implements RoutineImportService {
     this.parseInBackground = true,
   }) : _channel =
            channel ?? const MethodChannel('progress_meter/document_reader'),
-       _nativeSupported = nativeSupported ?? Platform.isMacOS,
+       _nativeSupported =
+           nativeSupported ?? defaultTargetPlatform == TargetPlatform.macOS,
        _picker = picker ?? _pickRoutineFile,
        _spreadsheetDecoder = spreadsheetDecoder ?? SpreadsheetReader.read,
        _parser = parser ?? ScheduleParser.parse;
@@ -161,9 +161,7 @@ class LocalRoutineImportService implements RoutineImportService {
       }
       final parser = _parser;
       if (!parseInBackground) return parser(document, defaultKind: defaultKind);
-      return await Isolate.run(
-        () => parser(document, defaultKind: defaultKind),
-      );
+      return parser(document, defaultKind: defaultKind);
     } on ImportFailure {
       rethrow;
     } on TimeoutException {

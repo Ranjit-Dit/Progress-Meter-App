@@ -17,10 +17,12 @@ import '../../notifications/presentation/notification_settings_card.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/progress_controller.dart';
+import '../../../app/web_backend_fallbacks.dart';
 import '../../../common/app_theme.dart';
 import '../../../common/widgets/progress_charts.dart';
 import '../domain/models.dart';
@@ -128,32 +130,39 @@ class _ProgressWorkspaceState extends State<ProgressWorkspace>
     c.addListener(_invalidatePrivateContext);
     _ownsCoach = widget.coachController == null;
     if (_ownsCoach) {
-      final repository = ApiCoachRepository();
-      _coachUrl = repository.baseUrl;
-      _coach = CoachController(repository);
+      if (kIsWeb) {
+        _coachUrl = Uri.parse('https://web.progress-meter.invalid');
+        _coach = CoachController(WebCoachRepository());
+      } else {
+        final repository = ApiCoachRepository();
+        _coachUrl = repository.baseUrl;
+        _coach = CoachController(repository);
+      }
     } else {
       _coach = widget.coachController!;
       _coachUrl = Uri.parse('http://127.0.0.1:8787');
     }
     _ownsLab = widget.labController == null;
-    _lab =
-        widget.labController ??
+    _lab = widget.labController ??
         LabController(
-          ApiLabRepository(baseUrl: _coachUrl),
+          kIsWeb ? WebLabRepository() : ApiLabRepository(baseUrl: _coachUrl),
           saveResult: c.recordLabResult,
         );
     _ownsBenchmarks = widget.benchmarkController == null;
-    _benchmarks =
-        widget.benchmarkController ??
+    _benchmarks = widget.benchmarkController ??
         BenchmarkResearchController(
-          ApiBenchmarkResearchRepository(baseUrl: _coachUrl),
+          kIsWeb
+              ? WebBenchmarkResearchRepository()
+              : ApiBenchmarkResearchRepository(baseUrl: _coachUrl),
         );
     _ownsJudgments = widget.judgmentController == null;
     _judgments =
         widget.judgmentController ??
         AiJudgmentController(
           progress: c,
-          repository: ApiJudgmentRepository(baseUrl: _coachUrl),
+          repository: kIsWeb
+              ? WebJudgmentRepository()
+              : ApiJudgmentRepository(baseUrl: _coachUrl),
         );
     _ownsNotifications = widget.notificationController == null;
     _notifications =
@@ -236,27 +245,36 @@ class _ProgressWorkspaceState extends State<ProgressWorkspace>
     _judgments = AiJudgmentController(
       progress: c,
       repository: personal == null
-          ? ApiJudgmentRepository(
-              baseUrl: _coachUrl,
-              accessToken: _backendToken,
-            )
+          ? (kIsWeb
+                ? WebJudgmentRepository()
+                : ApiJudgmentRepository(
+                    baseUrl: _coachUrl,
+                    accessToken: _backendToken,
+                  ))
           : PersonalJudgmentRepository(config: personal),
     );
     _ownsJudgments = true;
     if (_ownsBenchmarks) _benchmarks.dispose();
     _benchmarks = BenchmarkResearchController(
       personal == null
-          ? ApiBenchmarkResearchRepository(
-              baseUrl: _coachUrl,
-              accessToken: _backendToken,
-            )
+          ? (kIsWeb
+                ? WebBenchmarkResearchRepository()
+                : ApiBenchmarkResearchRepository(
+                    baseUrl: _coachUrl,
+                    accessToken: _backendToken,
+                  ))
           : PersonalBenchmarkResearchRepository(config: personal),
     );
     _ownsBenchmarks = true;
     if (_ownsLab) _lab.dispose();
     _lab = LabController(
       personal == null
-          ? ApiLabRepository(baseUrl: _coachUrl, accessToken: _backendToken)
+          ? (kIsWeb
+                ? WebLabRepository()
+                : ApiLabRepository(
+                    baseUrl: _coachUrl,
+                    accessToken: _backendToken,
+                  ))
           : PersonalLabRepository(config: personal),
       saveResult: c.recordLabResult,
     );
@@ -264,7 +282,12 @@ class _ProgressWorkspaceState extends State<ProgressWorkspace>
     if (_ownsCoach) _coach.dispose();
     _coach = CoachController(
       personal == null
-          ? ApiCoachRepository(baseUrl: _coachUrl, accessToken: _backendToken)
+          ? (kIsWeb
+                ? WebCoachRepository()
+                : ApiCoachRepository(
+                    baseUrl: _coachUrl,
+                    accessToken: _backendToken,
+                  ))
           : PersonalCoachRepository(config: personal),
     );
     _ownsCoach = true;

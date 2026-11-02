@@ -1,18 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'app/app.dart';
 import 'app/progress_controller.dart';
-import 'features/progress/data/progress_repository.dart';
+import 'app/progress_storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    final directory = await getApplicationSupportDirectory();
     final controller = ProgressController(
-      JsonProgressRepository(File('${directory.path}/progress_v1.json')),
+      await createProgressRepository(),
     );
     await controller.initialize();
     runApp(ProgressMeterApp(controller: controller));
