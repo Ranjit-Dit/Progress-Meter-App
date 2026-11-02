@@ -16,6 +16,10 @@ flutter run -d macos
 
 For iPhone setup, feature details, and current platform limits, see the [app README](apps/progress_meter/README.md). Android runner files are included; Android device behavior has not been verified.
 
+## Web version
+
+Open the deployed browser version at [progress-meter-kappa.vercel.app](https://progress-meter-kappa.vercel.app/). It keeps browser-local workspace data and supports the core dashboard, goals, routines, tasks, benchmarks, and evidence flows. For AI requests, configure a reachable HTTPS gateway in the app; native notifications and local file integrations remain available in the macOS/iOS builds.
+
 The app also includes a small standalone C helper under [`apps/progress_meter/native/`](apps/progress_meter/native/). It calculates deterministic benchmark roadmap readiness from milestone completion fractions and has a C ABI suitable for future Dart FFI integration. It does not judge the four AI-only progress dimensions. Run `make test` in that directory to verify it.
 
 ## Configure AI
