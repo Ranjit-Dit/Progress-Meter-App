@@ -2,7 +2,7 @@
 
 The student Progress Meter Flutter application is in **[`apps/progress_meter/`](apps/progress_meter/)**. Version 1.8.0 includes academic and career progress, AI-only assessments, Testing Lab, goals, researched benchmark paths, routines, daily tasks, document imports, and personal AI provider connections.
 
-The existing NestJS backend remains at the repository root (`src/`, `package.json`, and database migrations). It is a separate codebase. The Flutter app currently uses local device storage, direct personal AI connections, or its own optional AI gateway in `apps/progress_meter/backend/`; it is not connected to the root NestJS service.
+This repository contains the Flutter app and its optional AI gateway. The older NestJS service that previously lived at the repository root has been removed from the current tree; its earlier commits remain in Git history if it ever needs to be recovered. The Flutter app uses local device storage, direct personal AI connections, or the gateway in `apps/progress_meter/backend/`.
 
 ## Run the Flutter app
 
@@ -22,7 +22,7 @@ The app also includes a small standalone C helper under [`apps/progress_meter/na
 
 In the app, open **Settings → Your AI model → Connect my AI** and select your provider, model ID, and API key. Personal keys stay in memory for the current app session and are excluded from saved data and backups.
 
-To use the app's optional Node.js AI gateway instead, follow its [backend setup instructions](apps/progress_meter/backend/README.md). Create a local `.env` from `.env.example`; API keys and local environment files are excluded from version control.
+To use the app's optional Node.js AI gateway instead, follow its [backend setup instructions](apps/progress_meter/backend/README.md). Create `apps/progress_meter/backend/.env` from `apps/progress_meter/backend/.env.example`; API keys and local environment files are excluded from version control.
 
 ## Verify the app
 
